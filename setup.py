@@ -7,19 +7,15 @@ modules = [
         'roi_align.crop_and_resize_cpu',
         ['roi_align/src/crop_and_resize.cpp'],
         extra_compile_args={'cxx': ['-g', '-fopenmp']}
-        )
-]
-
-if torch.cuda.is_available():
-    modules.append(
-        CUDAExtension(
-            'roi_align.crop_and_resize_gpu',
-            ['roi_align/src/crop_and_resize_gpu.cpp',
-             'roi_align/src/cuda/crop_and_resize_kernel.cu'],
-            extra_compile_args={'cxx': ['-g', '-fopenmp'],
-                                'nvcc': ['-O2']}
-        )
+    ),
+    CUDAExtension(
+        'roi_align.crop_and_resize_gpu',
+        ['roi_align/src/crop_and_resize_gpu.cpp',
+         'roi_align/src/cuda/crop_and_resize_kernel.cu'],
+        extra_compile_args={'cxx': ['-g', '-fopenmp'],
+                            'nvcc': ['-O2']}
     )
+]
 
 setup(
     name='roi_align',
